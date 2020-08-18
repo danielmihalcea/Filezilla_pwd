@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Decrypteur de mot de passe FileZilla - Daniel MIHALCEA</title>
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+function decrypt () {
+    var m_key="FILEZILLA1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var c = $("#a").val();
+    var cl = c.length;
+    if (cl%3 == 0) {
+        var pos = (cl / 3) % m_key.length;
+        var dec = "";        
+        for (var i=0; i<(cl/3); i++) {
+            dec += String.fromCharCode(c.substr(i*3,3) ^ m_key.charCodeAt((i+pos)%cl));
+        }
+        $("#b").css("color", "green");
+        $("#b").text(dec);
+    } else {
+        $("#b").css("color", "red");
+        $("#b").text("le code saisi est invalide !");
+    }
+}
+
+</script>
+
+<h1>Decrypteur de mot de passe FileZilla en JavaScript</h1>
+<p style="width:650px;text-align:justify;">Petit code JavaScript permettant de décrypter les mots de passe FileZilla stockés dans le fichier de configuration.
+L'avantage de l'utilisation du JavaScript est que l'utilisateur est certain que le script ne va pas concerver la trace du mot de passe décrypté et ainsi provoquer un problème de sécurité potentiel.</p>
+Mot de passe encrypté : <form action="" onsubmit="decrypt();return false;" method="post" style="display:inline;"><input type="text" id="a" value="120125125112000" onClick="this.select();"> <input type="submit" value="decrypter"></form><br>
+Mot de passe décrypté : <span id="b"></span>
+
+</body>
+</html>
